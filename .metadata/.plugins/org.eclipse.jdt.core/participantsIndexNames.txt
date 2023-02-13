@@ -1,0 +1,11 @@
+INDEX VERSION 1.131
+C:\Users\User\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2097447397.index
+\spring-app1\src\main\java
+C:\Users\User\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2422006830.index
+\spring-app12\src\main\java
+C:\Users\User\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2491043092.index
+\Lesson6.HWSolution\src\main\java
+C:\Users\User\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4147253374.index
+\sprfa2\target\generated-sources\annotations
+C:\Users\User\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2086152941.index
+\spring-mvc-app1\target\generated-sources\annotations
