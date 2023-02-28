@@ -7,9 +7,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.dao.PersonDAO;
@@ -61,7 +61,13 @@ public class PeopleController {
 		return "people/edit";
 	}
 	
-	@PatchMapping("/{id}")
+	@DeleteMapping("/{id}")
+	public String delete(@PathVariable("id") int id) {
+		personDAO.delete(id);
+		return "redirect:/people";
+	}
+	
+	@PostMapping("/{id}")
 	public String update(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult, @PathVariable("id") int id) {
 		if (bindingResult.hasErrors()) return "people/edit";
 		
@@ -69,9 +75,4 @@ public class PeopleController {
 		return "redirect:/people";
 	}
 	
-	@DeleteMapping("/{id}")
-	public String delete(@PathVariable("id") int id) {
-		personDAO.delete(id);
-		return "redirect:/people";
-	}
 }
