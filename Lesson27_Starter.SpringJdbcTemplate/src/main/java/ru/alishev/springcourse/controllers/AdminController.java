@@ -1,5 +1,7 @@
 package ru.alishev.springcourse.controllers;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +25,9 @@ public class AdminController {
 	}
 	
 	@GetMapping()
-	public String adminPage(Model model, @ModelAttribute("person") Person person) {
-		model.addAttribute("person", personDAO.index());
+	public String adminPage(HttpServletResponse response, Model model, @ModelAttribute("person") Person person) {
+	    response.setCharacterEncoding("UTF-8");
+		model.addAttribute("people", personDAO.index());
 		
 		return "adminPage";
 	}
@@ -35,4 +38,5 @@ public class AdminController {
 		
 		return "redirect:/people";
 	}
+	
 }
