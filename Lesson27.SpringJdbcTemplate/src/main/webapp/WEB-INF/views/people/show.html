@@ -6,12 +6,24 @@
 </head>
 <body>
 <p th:text="${person.getFullName() + ', ' + person.getBirthYear()}">VALUE</p>
-<p th:text="${person.getPersonId()}">VALUE</p>
-<p th:text="${person.getFullName()}">VALUE</p>
 
-<a th:href="@{/people/{id}/edit(id=${person.getPersonId()})}">Edit</a>
-
-<form th:method="DELETE" th:action="@{/people/{id}(id=${person.getPersonId()})}">
+<div th:if="${books.size() > 0}" >
+	<hr>
+	<b>Книги:</b>
+	<br>
+	<div th:each="book : ${books}">
+	    <a th:href="@{/library/{id}(id=${book.getBook_id()})}"
+		       th:text="${book.getName() + ', ' + book.getYear()}">user</a>
+	</div>
+</div>
+<div th:unless="${books.size() > 0}">
+	<p>Человек пока не взял ни одной книги</p>
+</div>
+<hr>
+<form th:method="PATCH" th:action="@{/people/{id}(id=${person.getPerson_id()})}">
+    <input type="submit" value="Edit"/>
+</form>
+<form th:method="DELETE" th:action="@{/people/{id}(id=${person.getPerson_id()})}">
     <input type="submit" value="Delete"/>
 </form>
 </body>

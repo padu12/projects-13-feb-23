@@ -28,11 +28,11 @@ public class Person {
         this.birth_year = age;
     }
 
-    public int getPersonId() {
+    public int getPerson_id() {
         return person_id;
     }
 
-    public void setPersonId(int id) {
+    public void setPerson_id(int id) {
         this.person_id = id;
     }
 

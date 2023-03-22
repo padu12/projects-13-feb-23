@@ -1,12 +1,14 @@
 package ru.alishev.springcourse.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.alishev.springcourse.models.Person;
 
-import java.util.List;
+import ru.alishev.springcourse.models.Book;
+import ru.alishev.springcourse.models.Person;
 
 /**
  * @author Neil Alishev
@@ -23,6 +25,13 @@ public class PersonDAO {
 
     public List<Person> index() {
         return jdbcTemplate.query("SELECT * FROM Person", new BeanPropertyRowMapper<>(Person.class));
+    }
+    
+    
+    public List<Book> getTakenBooks(int id) {
+        return jdbcTemplate.query("SELECT Book.book_id, Book.person_id, Book.name, Book.author, Book.year "
+        		+ "FROM Book JOIN Person ON Book.person_id=Person.person_id where Book.person_id=?", new Object[]{id},
+        		new BeanPropertyRowMapper<>(Book.class));
     }
 
     public Person show(int id) {
@@ -42,4 +51,10 @@ public class PersonDAO {
     public void delete(int id) {
         jdbcTemplate.update("DELETE FROM Person WHERE person_id=?", id);
     }
+    
+//    public List<Book> getTakenBooks1(int id) {
+//    	return jdbcTemplate.query("SELECT Book.book_id, Book.person_id, Book.name, Book.author, Book.year "
+//    			+ "FROM Book JOIN Person ON Book.person_id=Person.person_id where Book.person_id=?",
+//    			new Object[]{id}, new BeanPropertyRowMapper<>(Book.class)).stream().findAny().orElse(null);
+//    }
 }

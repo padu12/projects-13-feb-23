@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ru.alishev.springcourse.dao.BookDAO;
+import ru.alishev.springcourse.dao.PersonDAO;
 import ru.alishev.springcourse.models.Book;
 import ru.alishev.springcourse.models.Person;
 
@@ -22,11 +23,13 @@ import ru.alishev.springcourse.models.Person;
 @RequestMapping("/library")
 public class BookController {
 	private final BookDAO bookDAO;
+	private final PersonDAO personDAO;
 
 	@Autowired
-	public BookController(BookDAO bookDAO) {
+	public BookController(BookDAO bookDAO, PersonDAO personDAO) {
 		super();
 		this.bookDAO = bookDAO;
+		this.personDAO = personDAO;
 	}
 	
 	@GetMapping()
@@ -50,8 +53,10 @@ public class BookController {
 	}
 	
 	@GetMapping("/{id}")
-	public String show(@PathVariable("id") int id, Model model) {
+	public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
 		model.addAttribute("book", bookDAO.show(id));
+		model.addAttribute("people", personDAO.index());
+		model.addAttribute("person1", bookDAO.getAuthor(id));
 		return "library/show";
 	}
 	
@@ -76,4 +81,26 @@ public class BookController {
         bookDAO.delete(id);
         return "redirect:/library";
     }
+    
+	@PatchMapping("/{id}/set")
+	public String set(@PathVariable("id") int id, @ModelAttribute("person") Person person,
+			BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors())
+			return "library/show";
+		
+		bookDAO.set(id, person);
+//		model.addAttribute("book", bookDAO.show(id));
+//		model.addAttribute("people", personDAO.index());
+//		model.addAttribute("person1", bookDAO.getAuthor(id));
+		return "redirect:/library";
+	}
+	
+	@PatchMapping("/{id}/set-free")
+	public String setFree(@PathVariable("id") int id, Model model) {
+		bookDAO.setFree(id);
+//		model.addAttribute("book", bookDAO.show(id));
+//		model.addAttribute("people", personDAO.index());
+//		model.addAttribute("person1", bookDAO.getAuthor(id));
+		return "redirect:/library";
+	}
 }
